@@ -113,10 +113,10 @@ Refactors performed:
     - IOptionsMonitor allows for hot-reload of the `DataStoreType` depending on the provider used
 
 3. Manual instantiation of Datastore providers
-    - Added [AccountDataStoreFactory](./ClearBank.DeveloperTest/Data/AccountDataStoreFactory.cs#7) + [IAccountDataStoreFactory](ClearBank.DeveloperTest\Data\Interfaces\IAccountDataStoreFactory.cs#3) interface
+    - Added [AccountDataStoreFactory](./ClearBank.DeveloperTest/Data/AccountDataStoreFactory.cs#8) + [IAccountDataStoreFactory](ClearBank.DeveloperTest\Data\Interfaces\IAccountDataStoreFactory.cs#3) interface
     - Moved Injection of `IOptionsMonitor<DataStoreConfig>` into the `DataStoreFactory`
     - Added [IAccountDataStore](ClearBank.DeveloperTest\Data\Interfaces\IAccountDataStore.cs#5) interface to be implemented by both [AccountDataStore](ClearBank.DeveloperTest\Data\AccountDataStore.cs#6) and [BackupAccountDataStore](ClearBank.DeveloperTest\Data\BackupAccountDataStore.cs#5)
-    - Injected `IKeyedServiceProvider` to dynamically resolve `IDataStore` based on `DataStoreType`
+    - Injected `IServiceProvider` to dynamically resolve `IDataStore` based on `DataStoreType`
 
 4. Default to primary datastore  
     - Since this is a refactoring exercise alone, I have not updated the logic here.  
