@@ -140,3 +140,11 @@ Additional Enhancements:
 3. It's currently possible to request a negative payment - this needs to be prevented.
 4. While the goal of this exercise was not to add logic, a productionised version of the payment service would also need to add logging, error handling, and potentially a payment rollback if the balance update fails
 5. The current code is not asynchronous, so has no `async` methods, but I'd make the full stack `async` when interacting with a real database / IO
+
+Unit Testing:
+=============
+
+Unit tests have been added for all new code, including both happy-path and negative tests, and the `PaymentService` has 100% coverage.
+The majority of the validation logic is now done in [AccountExtensions.cs](ClearBank.DeveloperTest\Extensions\AccountExtensions.cs) so this is where I spent the most time testing
+
+![alt text](refactor_code_coverage.png)
