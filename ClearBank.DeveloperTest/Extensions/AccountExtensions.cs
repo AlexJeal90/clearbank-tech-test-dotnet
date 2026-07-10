@@ -6,27 +6,28 @@ public static class AccountExtensions
 {
     public static bool IsValidPaymentRequest(this Account? account, MakePaymentRequest request)
     {
+        // Suggested enhancement - Also add validation for negative payment amounts
         return request.PaymentScheme switch
         {
             _ when account is null => false,
-            PaymentScheme.FasterPayments when account.IsFasterPaymentsPermitted(request) => true,
-            PaymentScheme.Bacs when account.IsBacsPaymentPermitted() => true,
-            PaymentScheme.Chaps when account.IsChapsPaymentPermitted() => true,
+            PaymentScheme.FasterPayments when account.IsValidForFasterPayments(request) => true,
+            PaymentScheme.Bacs when account.IsValidForBacs() => true,
+            PaymentScheme.Chaps when account.IsValidForChaps() => true,
             _ => false
         };
     }
 
-    private static bool IsFasterPaymentsPermitted(this Account account, MakePaymentRequest request)
+    private static bool IsValidForFasterPayments(this Account account, MakePaymentRequest request)
     {
         return account.AllowedPaymentSchemes.HasFlag(AllowedPaymentSchemes.FasterPayments)
             && account.Balance >= request.Amount;
     }
     
-    private static bool IsChapsPaymentPermitted(this Account account)
+    private static bool IsValidForChaps(this Account account)
     {
         return account.AllowedPaymentSchemes.HasFlag(AllowedPaymentSchemes.Chaps) 
             && account.Status == AccountStatus.Live;
     }
 
-    private static bool IsBacsPaymentPermitted(this Account account) => account.AllowedPaymentSchemes.HasFlag(AllowedPaymentSchemes.Bacs);
+    private static bool IsValidForBacs(this Account account) => account.AllowedPaymentSchemes.HasFlag(AllowedPaymentSchemes.Bacs);
 }

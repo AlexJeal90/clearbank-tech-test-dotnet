@@ -8,6 +8,7 @@ namespace ClearBank.DeveloperTest.Types
 
         public string DebtorAccountNumber { get; set; }
 
+        // Suggested enhancement - Also add validation for negative payment amounts
         public decimal Amount { get; set; }
 
         public DateTime PaymentDate { get; set; }
